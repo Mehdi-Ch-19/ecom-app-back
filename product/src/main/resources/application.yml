@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: product-service
+  data:
+    mongodb:
+      authentication-database: admin
+      username: rootuser
+      password: rootpass
+      database: product
+      port: 27017
+      host: localhost
+server:
+  port: 8083
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
