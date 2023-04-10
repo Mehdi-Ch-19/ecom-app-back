@@ -10,6 +10,6 @@ import java.util.List;
 @FeignClient(name = "REVIEW-SERVICE")
 public interface ReviewRest {
 
-    @GetMapping("/api/v1/review/{product_id}")
+    @GetMapping("/api/v1/review/product/{product_id}")
     List<Review> getAllReviewByProduct(@PathVariable String product_id);
 }

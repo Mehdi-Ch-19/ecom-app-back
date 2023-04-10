@@ -33,6 +33,7 @@ public class ReviewServiceImp implements ReviewService{
 
     @Override
     public List<Review> getReviewsByProduct(String productid) {
-        return null;
+        return reviewRepo.findAllByProductId(productid);
+
     }
 }
