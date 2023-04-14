@@ -1,17 +1,23 @@
 spring:
   application:
     name: product-service
-  data:
-    mongodb:
-      authentication-database: admin
-      username: rootuser
-      password: rootpass
-      database: product
-      port: 27017
-      host: localhost
+  datasource:
+    url: jdbc:postgresql://localhost:5433/product
+    username: 'mehdi'
+    password: 'password'
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
 server:
   port: 8083
 eureka:
   client:
     fetch-registry: true
     register-with-eureka: true
+
+
