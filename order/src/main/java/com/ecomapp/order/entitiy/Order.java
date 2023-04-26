@@ -35,4 +35,6 @@ public class Order {
     private List<ProductItem> productItem;
     @Transient
     private Customer customer;
+    @OneToOne
+    private ShippingAdresse adresse;
 }

@@ -9,8 +9,9 @@
         <outputRelativeToContentRoot value="true" />
         <module name="EurekaServer" />
         <module name="product" />
-        <module name="gateway" />
         <module name="review" />
+        <module name="Auth" />
+        <module name="gateway" />
         <module name="ecom-app" />
         <module name="order" />
       </profile>
@@ -33,6 +34,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="Auth" options="-parameters" />
       <module name="EurekaServer" options="-parameters" />
       <module name="customer" options="-parameters" />
       <module name="gateway" options="-parameters" />

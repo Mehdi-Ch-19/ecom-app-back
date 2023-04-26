@@ -1,19 +1,20 @@
 package com.ecomapp.customer.entity;
 
 
-import com.ecomapp.customer.enums.Role;
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Getter
+@Setter
 public class Customer {
     @Id
     @Column(name = "id",nullable = false , updatable = false  )
@@ -26,7 +27,14 @@ public class Customer {
     @Nonnull
     private String email;
     @Nonnull
-    @Column(name = "password",length = 50)
+    @Column(name = "password",length = 100)
     private String password;
-    private Role role;
+
+    private boolean isAdmin;
+    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    private Collection<Role> roles = new ArrayList<>();
+
+    public void addRole(Role role){
+        this.getRoles().add(role);
+    }
 }
