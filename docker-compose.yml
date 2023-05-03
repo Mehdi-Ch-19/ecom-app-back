@@ -27,6 +27,13 @@ services:
     networks:
       - postgres
     restart: unless-stopped
+  rabbitmq:
+    image: rabbitmq:3.9.20-management-alpine
+    container_name: rabbitmqq
+    ports:
+      - "5672:5672" # default port for RabbitMQ
+      - "15672:15672" # management port
+
 networks:
   postgres:
     driver: bridge

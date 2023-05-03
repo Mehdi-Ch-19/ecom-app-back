@@ -113,8 +113,9 @@ public class AuthFilter implements WebFilter {
                 }
             } else {
                 // If JWT token is not present, return an error response
-                exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
-                return exchange.getResponse().setComplete();
+                //exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+                //return exchange.getResponse().setComplete();
+                return chain.filter(exchange);
             }
 
             // Continue processing the request

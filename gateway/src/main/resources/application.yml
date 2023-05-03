@@ -29,6 +29,7 @@ spring:
             - Path= /api/v1/review/**
           filters:
             name: AuthFilter
+
         - id: auth-service
           uri: lb://auth-service
           predicates:
@@ -42,6 +43,8 @@ spring:
 
 eureka:
   client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
     fetch-registry: true
     register-with-eureka: true
 

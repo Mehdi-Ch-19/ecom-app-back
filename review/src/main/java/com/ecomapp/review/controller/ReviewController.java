@@ -3,6 +3,7 @@ package com.ecomapp.review.controller;
 import com.ecomapp.review.entity.Review;
 import com.ecomapp.review.exeption.ReviewAleardyExist;
 import com.ecomapp.review.service.ReviewService;
+import com.ecomapp.review.util.SecureWithToken;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,7 @@ public class ReviewController {
 
     private ReviewService reviewService;
     @PostMapping
+    @SecureWithToken
     public ResponseEntity<?> addReview(@RequestBody  Review review){
         try {
             Review addReview = reviewService.addReview(review);

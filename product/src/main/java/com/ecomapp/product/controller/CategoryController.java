@@ -7,6 +7,7 @@ import com.ecomapp.product.entity.Product;
 import com.ecomapp.product.exeption.CategoryNameAleardyExists;
 import com.ecomapp.product.service.CategoryService;
 import com.ecomapp.product.service.ProductServiceInterf;
+import com.ecomapp.product.util.SecureWithToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +31,7 @@ public class CategoryController {
         return new ResponseEntity<>(categoryService.save(category), HttpStatus.OK);
     }
     @GetMapping("/{categoryId}/products")
+    @SecureWithToken
     public ResponseEntity<List<Product>> allProductsByCategory(@PathVariable Long categoryId){
         List<Product> productList = categoryService.allProducts(categoryId);
         if (productList.isEmpty()){

@@ -57,6 +57,7 @@ public class CustomerController {
     }
 
     @DeleteMapping("/{id}")
+    @SecureWithToken
     public ResponseEntity<?> deletebyId(@PathVariable Long id){
         try {
             service.deleteCustomer(id);

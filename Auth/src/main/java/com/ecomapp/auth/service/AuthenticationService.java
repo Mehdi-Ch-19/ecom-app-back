@@ -3,10 +3,8 @@ package com.ecomapp.auth.service;
 
 import com.ecomapp.auth.config.JwtService;
 import com.ecomapp.auth.feign.CustomerRest;
-import com.ecomapp.auth.models.AuthenticationResponse;
-import com.ecomapp.auth.models.CustomerDto;
-import com.ecomapp.auth.models.CustomerRequest;
-import com.ecomapp.auth.models.CustomerSignUp;
+import com.ecomapp.auth.models.*;
+
 import java.io.IOException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -24,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.http.HttpHeaders;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -87,6 +86,8 @@ public class AuthenticationService {
             return AuthenticationResponse.builder()
                     .accessToken(jwtToken)
                     .refreshToken(refreshToken)
+                    .email(user.getUsername())
+                    .roles(user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                     .build();
         }catch (Exception e){
             log.info(e.getMessage());
@@ -94,37 +95,42 @@ public class AuthenticationService {
         }
 
     }
-    public void refreshToken(
+    public RefreshTokenResponce refreshToken(
             HttpServletRequest request,
-            HttpServletResponse response
-    ) throws IOException {
-        final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
-        final String refreshToken;
-        final String userEmail;
-        if (authHeader == null ||!authHeader.startsWith("Bearer ")) {
-            return;
-        }
-        refreshToken = authHeader.substring(7);
-        userEmail = jwtService.extractUsername(refreshToken);
-        if (userEmail != null) {
-            CustomerDto registercustomer = customerRest.findByEmail(userEmail);
-
-            Collection<GrantedAuthority> authorities = new ArrayList<>();
-            registercustomer.getRoles().forEach(r -> {
-                GrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(r.getRolename());
-                authorities.add(simpleGrantedAuthority);
-            });
-            User user = new User(registercustomer.getEmail()
-                    ,registercustomer.getPassword(),authorities);
-            if (jwtService.isTokenValid(refreshToken, user)) {
-                var accessToken = jwtService.generateToken(user);
-                var authResponse = AuthenticationResponse.builder()
-                        .accessToken(accessToken)
-                        .refreshToken(refreshToken)
-                        .build();
-                new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
+            HttpServletResponse response) throws IOException {
+        try {
+            final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+            final String refreshToken;
+            final String userEmail;
+            if (authHeader == null ||!authHeader.startsWith("Bearer ")) {
+                throw new RuntimeException("Jwt expected");
             }
+            refreshToken = authHeader.substring(7);
+            userEmail = jwtService.extractUsername(refreshToken);
+            if (userEmail != null) {
+                CustomerDto registercustomer = customerRest.findByEmail(userEmail);
+                Collection<GrantedAuthority> authorities = new ArrayList<>();
+                registercustomer.getRoles().forEach(r -> {
+                    GrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(r.getRolename());
+                    authorities.add(simpleGrantedAuthority);
+                });
+                User user = new User(registercustomer.getEmail()
+                        ,registercustomer.getPassword(),authorities);
+                if (jwtService.isTokenValid(refreshToken, user)) {
+                    var accessToken = jwtService.generateToken(user);
+                    return RefreshTokenResponce.builder()
+                            .accessToken(accessToken)
+                            .refreshToken(refreshToken)
+                            .build();
+                    //new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
+                }
+            }
+            throw new RuntimeException("invalid jwt ");
+        }catch (Exception e){
+            log.info(e.getMessage());
+            throw new RuntimeException();
         }
+
     }
 }
 

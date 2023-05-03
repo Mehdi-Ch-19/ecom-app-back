@@ -14,4 +14,5 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .addPathPatterns("/**") // Specify the path patterns to intercept, e.g., "/*", "/api/**", etc.
                 .excludePathPatterns("/public/**"); // Specify any path patterns to exclude from interception, if needed
     }
+
 }

@@ -13,6 +13,8 @@
         <option value="$PROJECT_DIR$/review/pom.xml" />
         <option value="$PROJECT_DIR$/order/pom.xml" />
         <option value="$PROJECT_DIR$/Auth/pom.xml" />
+        <option value="$PROJECT_DIR$/Amqp/pom.xml" />
+        <option value="$PROJECT_DIR$/Notification/pom.xml" />
       </list>
     </option>
   </component>

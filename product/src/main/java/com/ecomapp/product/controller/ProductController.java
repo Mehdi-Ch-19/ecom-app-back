@@ -3,6 +3,7 @@ package com.ecomapp.product.controller;
 import com.ecomapp.product.entity.Product;
 import com.ecomapp.product.exeption.ProductNotFound;
 import com.ecomapp.product.service.ProductServiceInterf;
+import com.ecomapp.product.util.SecureWithToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,11 +39,13 @@ public class ProductController {
     }
     //UPDATE METHOD
     @PostMapping()
+    @SecureWithToken
     public ResponseEntity<?> saveOrUpdateProduct(@RequestBody Product product){
         productService.saveOrUpdateProduct(product);
         return new ResponseEntity<>("added succesfuly",HttpStatus.OK);
     }
     @PutMapping("/{product_id}")
+    @SecureWithToken
     public void updateNumReview(@PathVariable String product_id){
         productService.UpdateNumReviews(product_id);
     }

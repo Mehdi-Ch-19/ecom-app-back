@@ -1,13 +1,12 @@
 package com.ecomapp.order.entitiy;
 
 import com.ecomapp.order.model.Customer;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -15,26 +14,29 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Getter
+@Setter
+@Table(name = "Orders")
 public class Order {
-
     @Id
-    @Column(name = "osderId",nullable = false,updatable = false)
+    @Column(name = "orderId",nullable = false,updatable = false)
     private String orderId;
-
     @Column(name = "customerId",nullable = false)
     private Long customerId;
     @Column(name = "orderDate")
     private LocalDateTime orderDate;
-
     @Column(name = "orderStatus")
     private String status;
     @Column(name = "TotalAmount",nullable = false)
-    private Long amount;
+    private double totalamount;
 
-    @OneToMany(mappedBy = "order")
-    private List<ProductItem> productItem;
+    @OneToMany(mappedBy = "order",cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("order")
+    private List<ProductItem> productItem = new ArrayList<>();
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("order")
+    private ShippingAdresse shippingAdresse;
     @Transient
     private Customer customer;
-    @OneToOne
-    private ShippingAdresse adresse;
+
 }

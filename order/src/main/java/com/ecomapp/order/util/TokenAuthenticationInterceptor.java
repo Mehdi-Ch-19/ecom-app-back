@@ -1,4 +1,4 @@
-package com.ecomapp.customer.util;
+package com.ecomapp.order.util;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -24,6 +24,7 @@ public class TokenAuthenticationInterceptor implements HandlerInterceptor {
                     response.setStatus(HttpStatus.SC_FORBIDDEN);
                     return false;
                 }
+                JwtToken.token = request.getHeader(HttpHeaders.AUTHORIZATION);
                 return true; // Return false to block the request for this example
             }
         }

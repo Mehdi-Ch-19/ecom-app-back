@@ -2,19 +2,34 @@ package com.ecomapp.customer.util;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.method.HandlerMethod;
+import org.springframework.web.server.ServerWebExchange;
+import org.springframework.web.server.adapter.DefaultServerWebExchange;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import java.util.List;
+
+@Slf4j
 public class TokenAuthenticationInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         // Check if the handler is a method in a controller
+        List<String> internals_calls = List.of(
+                "/api/v1/review",
+                "/api/v1/product",
+                "/api/v1/order");
+        log.info(request.getServletPath());
+        log.info(request.getRemoteUser());
+        log.info(request.getPathInfo());
+
         if (handler instanceof HandlerMethod handlerMethod) {
             // Check if the method is annotated with @SecureWithToken
             if (handlerMethod.getMethod().isAnnotationPresent(SecureWithToken.class)) {
+
                 // Perform token authentication logic here
                 // You can access the token from the request header, validate it, and return appropriate response
                 // If the token is valid, return true to allow the request to proceed to the endpoint
@@ -30,4 +45,6 @@ public class TokenAuthenticationInterceptor implements HandlerInterceptor {
         // Return true to allow the request to proceed to the endpoint for other cases
         return true;
     }
+
+
 }

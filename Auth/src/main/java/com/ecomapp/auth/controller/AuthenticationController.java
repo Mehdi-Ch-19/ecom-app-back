@@ -3,6 +3,7 @@ package com.ecomapp.auth.controller;
 import com.ecomapp.auth.models.AuthenticationResponse;
 import com.ecomapp.auth.models.CustomerRequest;
 import com.ecomapp.auth.models.CustomerSignUp;
+import com.ecomapp.auth.models.RefreshTokenResponce;
 import com.ecomapp.auth.service.AuthenticationService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -45,10 +46,15 @@ public class AuthenticationController {
     }
 
     @PostMapping("/refresh-token")
-    public void refreshToken(
+    public ResponseEntity<RefreshTokenResponce> refreshToken(
             HttpServletRequest request,
             HttpServletResponse response
     ) throws IOException {
-        service.refreshToken(request, response);
+        try {
+            RefreshTokenResponce refreshTokenResponce = service.refreshToken(request, response);
+            return new ResponseEntity<>(refreshTokenResponce,HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }
