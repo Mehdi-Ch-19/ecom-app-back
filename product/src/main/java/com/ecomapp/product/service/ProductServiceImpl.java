@@ -1,9 +1,9 @@
 package com.ecomapp.product.service;
 
+import com.ecomapp.feign.review.Review;
+import com.ecomapp.feign.review.ReviewRest;
 import com.ecomapp.product.entity.Product;
 import com.ecomapp.product.exeption.ProductNotFound;
-import com.ecomapp.product.feign.ReviewRest;
-import com.ecomapp.product.models.Review;
 import com.ecomapp.product.repository.ProductRepo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -51,4 +51,11 @@ public class ProductServiceImpl implements ProductServiceInterf{
         product.setReviews(reviewList);
         return product;
     }
+
+    @Override
+    public List<Review> findAllReviewsByProduct(String productId) {
+        return  reviewRest.getAllReviewByProduct(productId);
+
+    }
+
 }

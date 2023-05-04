@@ -1,6 +1,6 @@
 package com.ecomapp.order.entitiy;
 
-import com.ecomapp.order.model.Product;
+import com.ecomapp.feign.product.Product;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;

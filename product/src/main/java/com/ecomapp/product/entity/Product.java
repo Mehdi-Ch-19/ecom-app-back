@@ -1,9 +1,8 @@
 package com.ecomapp.product.entity;
 
-import com.ecomapp.product.models.Review;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import com.ecomapp.feign.review.Review;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 

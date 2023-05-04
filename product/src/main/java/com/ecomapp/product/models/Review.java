@@ -2,6 +2,7 @@ package com.ecomapp.product.models;
 
 import lombok.Data;
 
+/*
 @Data
 public class Review {
     private Long id;
@@ -10,3 +11,4 @@ public class Review {
     private String comment;
     private  String productId;
 }
+*/

@@ -14,7 +14,7 @@ spring:
       ddl-auto: create-drop
     show-sql: true
 server:
-  port: 8083
+  port: 8086
 eureka:
   client:
     service-url:

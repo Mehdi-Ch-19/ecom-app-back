@@ -24,6 +24,8 @@ public class TokenAuthenticationInterceptor implements HandlerInterceptor {
                     response.setStatus(HttpStatus.SC_FORBIDDEN);
                     return false;
                 }
+                JwtToken.token = request.getHeader(HttpHeaders.AUTHORIZATION);
+
                 return true; // Return false to block the request for this example
             }
         }

@@ -7,9 +7,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@FeignClient("CUSTOMER-SERVICE")
+/*@FeignClient("CUSTOMER-SERVICE")*/
 public interface CustomerRest {
 
-    @GetMapping("/api/v1/customer/login")
-    CustomerDto login(@RequestBody CustomerRequest customerRequest);
+    /*@GetMapping("/api/v1/customer/login")
+    CustomerDto login(@RequestBody CustomerRequest customerRequest);*/
 }

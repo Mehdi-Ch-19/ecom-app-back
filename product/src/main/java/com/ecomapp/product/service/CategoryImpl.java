@@ -13,9 +13,10 @@ import java.util.List;
 public class CategoryImpl implements CategoryService{
 
     private final CategoryRepo categoryRepo;
-
-    public CategoryImpl(CategoryRepo categoryRepo) {
+    private final ProductServiceInterf productServiceInterf;
+    public CategoryImpl(CategoryRepo categoryRepo, ProductServiceInterf productServiceInterf) {
         this.categoryRepo = categoryRepo;
+        this.productServiceInterf = productServiceInterf;
     }
 
     @Override
@@ -49,7 +50,11 @@ public class CategoryImpl implements CategoryService{
     public List<Product> allProducts(Long catId) {
         Category category = categoryRepo.findById(catId).orElse(null );
         assert category != null;
-        return category.getProducts();
+        List<Product> products =  category.getProducts();
+        products.forEach(product -> {
+            product.setReviews(productServiceInterf.findAllReviewsByProduct(product.getId()));
+        });
+        return products;
     }
 
     @Override

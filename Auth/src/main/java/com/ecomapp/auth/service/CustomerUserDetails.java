@@ -1,8 +1,8 @@
 package com.ecomapp.auth.service;
 
-import com.ecomapp.auth.feign.CustomerRest;
 import com.ecomapp.auth.models.AuthenticationResponse;
-import com.ecomapp.auth.models.CustomerDto;
+import com.ecomapp.feign.customer.CustomerDto;
+import com.ecomapp.feign.customer.CustomerRest;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

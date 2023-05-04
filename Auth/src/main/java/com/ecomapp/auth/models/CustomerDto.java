@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-@Data
+/*@Data
 public class CustomerDto {
 
     private Long id  ;
@@ -16,4 +16,4 @@ public class CustomerDto {
     private String password;
     private boolean isAdmin;
     private List<RoleDto> roles = new ArrayList<>() ;
-}
+}*/

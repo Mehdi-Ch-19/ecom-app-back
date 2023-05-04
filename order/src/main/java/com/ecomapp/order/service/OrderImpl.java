@@ -1,14 +1,15 @@
 package com.ecomapp.order.service;
 
+import com.ecomapp.amqp.RabbitMQMessageProducer;
+import com.ecomapp.feign.customer.Customer;
+import com.ecomapp.feign.customer.CustomerRest;
+import com.ecomapp.feign.product.Product;
+import com.ecomapp.feign.product.ProductRest;
 import com.ecomapp.order.dto.OrderRequest;
 import com.ecomapp.order.entitiy.Order;
 import com.ecomapp.order.entitiy.ProductItem;
 import com.ecomapp.order.entitiy.ShippingAdresse;
 import com.ecomapp.order.exeption.OrderNotFound;
-import com.ecomapp.order.feign.CustomerRest;
-import com.ecomapp.order.feign.ProductRest;
-import com.ecomapp.order.model.Customer;
-import com.ecomapp.order.model.Product;
 import com.ecomapp.order.respository.OrderRepo;
 import com.ecomapp.order.respository.ProductItemRepo;
 import com.ecomapp.order.respository.ShippingRepo;
@@ -34,6 +35,8 @@ public class OrderImpl implements OrderService{
     private final ProductRest productRest;
     private final ShippingRepo shippingRepo;
     private final ProductItemRepo productItemRepo;
+    private final RabbitMQMessageProducer producer;
+
     @Override
     public String makeOrder(OrderRequest orderRequest) {
         Customer customer = customerRest.findCustomerById(orderRequest.getCustomerId(), JwtToken.token);
@@ -65,6 +68,7 @@ public class OrderImpl implements OrderService{
         });
         orderRepo.saveAndFlush(order);
         shippingRepo.save(shippingAdresse);
+        //producer.publish();
         return order.getOrderId();
     }
 

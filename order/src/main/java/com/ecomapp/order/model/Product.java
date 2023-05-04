@@ -2,7 +2,7 @@ package com.ecomapp.order.model;
 
 import lombok.Data;
 
-@Data
+/*@Data
 public class Product {
     private String id;
     private String productTitle;
@@ -11,4 +11,4 @@ public class Product {
     private int numReviews ;
     private double price;
     private int countInStock ;
-}
+}*/

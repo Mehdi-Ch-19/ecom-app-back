@@ -2,15 +2,13 @@ package com.ecomapp.auth.service;
 
 
 import com.ecomapp.auth.config.JwtService;
-import com.ecomapp.auth.feign.CustomerRest;
 import com.ecomapp.auth.models.*;
-
-import java.io.IOException;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ecomapp.feign.customer.CustomerDto;
+import com.ecomapp.feign.customer.CustomerRest;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -19,7 +17,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
-import org.springframework.http.HttpHeaders;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -31,7 +30,7 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
     private final CustomerRest customerRest;
 
-    public AuthenticationService(JwtService jwtService, AuthenticationManager authenticationManager, CustomerRest customerRest) {
+    public AuthenticationService(JwtService jwtService, AuthenticationManager authenticationManager, com.ecomapp.feign.customer.CustomerRest customerRest) {
         this.jwtService = jwtService;
         this.authenticationManager = authenticationManager;
         this.customerRest = customerRest;

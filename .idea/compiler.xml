@@ -12,11 +12,12 @@
         <module name="Amqp" />
         <module name="review" />
         <module name="Auth" />
+        <module name="feign" />
         <module name="gateway" />
         <module name="Notification" />
         <module name="order" />
       </profile>
-      <profile name="Annotation profile for customer" enabled="true">
+      <profile name="Annotation profile for ecom-app" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -35,16 +36,16 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="Amqp" options="-parameters" />
-      <module name="Auth" options="-parameters" />
-      <module name="EurekaServer" options="-parameters" />
-      <module name="Notification" options="-parameters" />
-      <module name="customer" options="-parameters" />
-      <module name="gateway" options="-parameters" />
-      <module name="order" options="-parameters" />
+      <module name="Amqp" options="" />
+      <module name="Auth" options="" />
+      <module name="EurekaServer" options="" />
+      <module name="Notification" options="" />
+      <module name="customer" options="" />
+      <module name="gateway" options="" />
+      <module name="order" options="" />
       <module name="poduct" options="-parameters" />
-      <module name="product" options="-parameters" />
-      <module name="review" options="-parameters" />
+      <module name="product" options="" />
+      <module name="review" options="" />
     </option>
   </component>
 </project>

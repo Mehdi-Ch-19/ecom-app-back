@@ -1,16 +1,17 @@
 package com.ecomapp.review.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.time.LocalDateTime;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Getter
+@Setter
 public class Review {
     @Id
     @SequenceGenerator(
@@ -31,4 +32,6 @@ public class Review {
     private int rating;
     private String comment;
     private  String productId;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    private LocalDateTime reviewedAt;
 }

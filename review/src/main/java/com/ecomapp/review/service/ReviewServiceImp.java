@@ -1,21 +1,23 @@
 package com.ecomapp.review.service;
 
+import com.ecomapp.feign.product.ProductRest;
 import com.ecomapp.review.entity.Review;
 import com.ecomapp.review.exeption.ReviewAleardyExist;
-import com.ecomapp.review.feign.ProductRestFeign;
 import com.ecomapp.review.repository.ReviewRepo;
+import com.ecomapp.review.util.JwtToken;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 @Slf4j
 public class ReviewServiceImp implements ReviewService{
     private ReviewRepo reviewRepo;
-    private ProductRestFeign productRestFeign;
+    private ProductRest productRestFeign;
 
-    public ReviewServiceImp(ReviewRepo reviewRepo, ProductRestFeign productRestFeign) {
+    public ReviewServiceImp(ReviewRepo reviewRepo, ProductRest productRestFeign) {
         this.reviewRepo = reviewRepo;
         this.productRestFeign = productRestFeign;
     }
@@ -26,7 +28,8 @@ public class ReviewServiceImp implements ReviewService{
         if(review1 != null){
             throw new ReviewAleardyExist("you aleardy reviewd this product");
         }
-        productRestFeign.updateNumReiews(review.getProductId());
+        productRestFeign.updateNumReiews(review.getProductId(), JwtToken.token);
+        review.setReviewedAt(LocalDateTime.now());
         return reviewRepo.saveAndFlush(review);
 
     }
