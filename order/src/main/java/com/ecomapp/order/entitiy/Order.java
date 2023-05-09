@@ -1,9 +1,11 @@
 package com.ecomapp.order.entitiy;
 
 import com.ecomapp.feign.customer.Customer;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -23,6 +25,8 @@ public class Order {
     @Column(name = "customerId",nullable = false)
     private Long customerId;
     @Column(name = "orderDate")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime orderDate;
     @Column(name = "orderStatus")
     private String status;

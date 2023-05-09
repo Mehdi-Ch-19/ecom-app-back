@@ -22,7 +22,7 @@ public class CustomerApplication {
         return args -> {
             roleRepo.saveAndFlush(Role.builder().rolename("ROLE_USER").build());
             roleRepo.saveAndFlush(Role.builder().rolename("ROLE_ADMIN").build());
-            customerInter.addCustomer(new CustomerSignUpDto("mehdi","mehdi@gmail.com","pass123",false));
+            customerInter.addCustomer(new CustomerSignUpDto("mehdi","elmahdi.chiheb@uit.ac.ma","pass123",false));
 
         };
     }

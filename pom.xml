@@ -18,6 +18,7 @@
         <module>review</module>
         <module>Amqp</module>
         <module>feign</module>
+        <module>payement</module>
     </modules>
     <properties>
         <maven.compiler.source>17</maven.compiler.source>

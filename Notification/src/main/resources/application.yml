@@ -1,18 +1,21 @@
 spring:
   application:
     name: notification-service
-  datasource:
-    url: jdbc:postgresql://localhost:5433/notification
-    username: 'mehdi'
-    password: 'password'
-  jpa:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: chihebrca2002@gmail.com
+    default-encoding: UTF-8
     properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-        format_sql: true
-    hibernate:
-      ddl-auto: create-drop
-    show-sql: true
+      mail:
+        transport:
+          protocol: smtp
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+
 server:
   port: 8086
 eureka:
@@ -21,13 +24,7 @@ eureka:
       defaultZone: http://localhost:8761/eureka
     fetch-registry: true
     register-with-eureka: true
-rabbitmq:
-  exchanges:
-    internal:internal.exchange
-  queue:
-    notification:notification.queue
-  routing-keys:
-    internal-notification: internal.notification.routing-key
+
 
 
 

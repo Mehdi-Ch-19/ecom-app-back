@@ -12,7 +12,7 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-@Table(name = "ProductItem", uniqueConstraints = {@UniqueConstraint(columnNames = {"product_Item_Id"})})
+@Table(name = "ProductItemDto", uniqueConstraints = {@UniqueConstraint(columnNames = {"product_Item_Id"})})
 public class ProductItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,6 +20,10 @@ public class ProductItem {
     private Long id;
     @Column(name = "product_Id",nullable = false)
     private String productId;
+    @Column(name = "productName",nullable = false)
+    private String productName;
+    @Column(name = "unitPrice",nullable = false)
+    private double unitPrice;
     @ManyToOne
     @JoinColumn(name = "order_id",nullable = false)
     @JsonIgnoreProperties("productItem")
