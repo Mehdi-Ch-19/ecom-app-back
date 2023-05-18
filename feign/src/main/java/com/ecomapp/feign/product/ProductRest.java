@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestHeader;
 public interface ProductRest {
     @PutMapping("/api/v1/product/{product_id}")
     Product updateNumReiews(@PathVariable("product_id") String product_id,@RequestHeader(value = "Authorization") String authorization);
+    @PutMapping("/api/v1/product/{product_id}/rating/{rating}")
+    void updateRating(@PathVariable("product_id") String product_id , @PathVariable("rating") int rating);
     @GetMapping("/api/v1/product/{productId}")
     Product findProductById(@PathVariable("productId") String productId);
 }

@@ -8,6 +8,7 @@ import com.ecomapp.product.repository.ProductRepo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -29,6 +30,7 @@ public class ProductServiceImpl implements ProductServiceInterf{
     @Override
     public Product saveOrUpdateProduct(Product product) {
         product.setId(UUID.randomUUID().toString());
+        product.setAddeedAt(new Date());
         return productRepo.save(product);
     }
 
@@ -37,6 +39,22 @@ public class ProductServiceImpl implements ProductServiceInterf{
     public Product UpdateNumReviews(String product_id) {
         productRepo.updateNumReview(product_id);
         return productRepo.findById(product_id).orElse(null );
+    }
+
+    @Transactional
+    @Override
+    public void UpdateRating(String product_id, int rating) {
+        Product product = getById(product_id);
+        double oldrating = product.getRating();
+        double newrating = 0 ;
+        if(oldrating == 0){
+            newrating = rating;
+        }else {
+            oldrating+=rating;
+            newrating = oldrating/product.getNumReviews();
+        }
+        product.setRating(newrating);
+        productRepo.save(product);
     }
 
     @Override

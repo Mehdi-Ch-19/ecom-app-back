@@ -1,0 +1,20 @@
+server:
+  port: 9093
+
+
+eureka:
+  instance:
+    appname: documentation-application
+  client:
+    enabled: true
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+swagger:
+  config:
+    refreshrate: 5000

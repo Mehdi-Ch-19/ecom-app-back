@@ -13,6 +13,7 @@
         <module name="review" />
         <module name="Auth" />
         <module name="payement" />
+        <module name="documentation" />
         <module name="feign" />
         <module name="gateway" />
         <module name="Notification" />

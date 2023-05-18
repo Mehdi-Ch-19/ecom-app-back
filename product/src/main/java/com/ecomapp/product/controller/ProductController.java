@@ -50,4 +50,8 @@ public class ProductController {
         productService.UpdateNumReviews(product_id);
     }
 
+    @PutMapping("/{product_id}/rating/{rating}")
+    public void updateRating(@PathVariable String product_id , @PathVariable int rating){
+        productService.UpdateRating(product_id,rating);
+    }
 }

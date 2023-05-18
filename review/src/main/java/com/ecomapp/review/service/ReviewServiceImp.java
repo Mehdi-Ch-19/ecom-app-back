@@ -29,6 +29,7 @@ public class ReviewServiceImp implements ReviewService{
             throw new ReviewAleardyExist("you aleardy reviewd this product");
         }
         productRestFeign.updateNumReiews(review.getProductId(), JwtToken.token);
+        productRestFeign.updateRating(review.getProductId(),review.getRating());
         review.setReviewedAt(LocalDateTime.now());
         return reviewRepo.saveAndFlush(review);
 

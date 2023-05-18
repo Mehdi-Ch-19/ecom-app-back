@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -27,9 +28,13 @@ public class Product {
     @Column(name = "description")
     private String description;
     private int numReviews = 0;
+    @Temporal(TemporalType.DATE)
+    private Date addeedAt;
     private double price;
     @Column(name = "quantity")
     private int countInStock ;
+    @Column(name = "rating")
+    private double rating =  0;
     @ManyToOne
     @JoinColumn(name = "category_Id")
     @JsonIgnoreProperties("products")

@@ -8,6 +8,7 @@ spring:
     discovery:
       enabled: true
     gateway:
+
       routes:
         - id: customer-service
           uri: lb://customer-service
@@ -34,11 +35,15 @@ spring:
           uri: lb://auth-service
           predicates:
             - Path= /api/v1/auth
+        - id: angular
+          uri: http://localhost:4200/
+          predicates:
+            - Path=/**
+
 
   main:
     allow-bean-definition-overriding: true
     allow-circular-references: true
-
 
 
 eureka:

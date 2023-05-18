@@ -1,5 +1,7 @@
 package com.ecomapp.feign.review;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -11,5 +13,7 @@ public class Review {
     private int rating;
     private String comment;
     private  String productId;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime reviewedAt;
 }

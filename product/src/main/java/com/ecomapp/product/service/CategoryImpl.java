@@ -58,6 +58,17 @@ public class CategoryImpl implements CategoryService{
     }
 
     @Override
+    public List<Product> allProductsByCategoryName(String name) {
+        Category category = categoryRepo.findCategoryByCategoryTitle(name);
+        assert category != null;
+        List<Product> products =  category.getProducts();
+        products.forEach(product -> {
+            product.setReviews(productServiceInterf.findAllReviewsByProduct(product.getId()));
+        });
+        return products;
+    }
+
+    @Override
     public Category findByCategoryTitle(String name) {
         return categoryRepo.findCategoryByCategoryTitle(name);
     }

@@ -15,5 +15,6 @@ public interface CategoryService {
     Category update(CategoryDto categoryDto);
 
     List<Product> allProducts(Long catId);
+    List<Product> allProductsByCategoryName(String name);
     Category findByCategoryTitle(String name);
 }
