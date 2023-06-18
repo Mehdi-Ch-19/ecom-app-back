@@ -1,5 +1,6 @@
 package com.ecomapp.customer.Dto;
 
+import com.ecomapp.customer.entity.Adresse;
 import com.ecomapp.customer.entity.Role;
 import lombok.Data;
 
@@ -12,5 +13,6 @@ public class CustomerDto {
     private Long id;
     private String name;
     private String email;
+    private Adresse adresse;
     private List<Role> roles = new ArrayList<>();
 }

@@ -10,7 +10,7 @@ import java.util.List;
 public interface CategoryService {
     List<Category> findAll();
     Category save(CategoryRequest categoryRequest);
-    void deleteById(Long id);
+    boolean deleteById(Long id);
 
     Category update(CategoryDto categoryDto);
 

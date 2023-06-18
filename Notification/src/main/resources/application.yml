@@ -4,7 +4,7 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: chihebrca2002@gmail.com
+    username: test123
     default-encoding: UTF-8
     properties:
       mail:

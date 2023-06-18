@@ -1,6 +1,7 @@
 package com.ecomapp.customer.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
 import lombok.*;
@@ -14,7 +15,9 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Getter
+@Table( name = "customer", uniqueConstraints = {@UniqueConstraint(columnNames = {"id"})})
 @Setter
+@ToString
 public class Customer {
     @Id
     @Column(name = "id",nullable = false , updatable = false  )
@@ -33,6 +36,9 @@ public class Customer {
     private boolean isAdmin;
     @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private Collection<Role> roles = new ArrayList<>();
+    @OneToOne
+    @JsonIgnoreProperties("customer")
+    private Adresse adresse;
 
     public void addRole(Role role){
         this.getRoles().add(role);

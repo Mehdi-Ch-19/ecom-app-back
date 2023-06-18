@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("api/v1/customer")
 public class CustomerController {
@@ -27,6 +29,14 @@ public class CustomerController {
     public ResponseEntity<CustomerDto>  createcustomer(@RequestBody CustomerSignUpDto customerSignUpDto){
         CustomerDto customerDto = service.addCustomer(customerSignUpDto);
         return new ResponseEntity<>(customerDto, HttpStatus.OK);
+    }
+    @PostMapping("/update")
+    public  ResponseEntity<?> updateCustoner(@RequestBody CustomerDto customerDto){
+        try {
+            return new ResponseEntity<>(this.service.updateCustomer(customerDto),HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_FOUND);
+        }
     }
     @GetMapping("/{id}")
     @SecureWithToken
@@ -66,5 +76,10 @@ public class CustomerController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
+    }
+    @GetMapping("/admins")
+    public ResponseEntity<List<CustomerDto>> getall(){
+        List<CustomerDto> customerList = service.allAdmins();
+        return new ResponseEntity<>(customerList,HttpStatus.OK);
     }
 }

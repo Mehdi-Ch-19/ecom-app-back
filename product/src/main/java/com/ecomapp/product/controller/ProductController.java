@@ -26,6 +26,15 @@ public class ProductController {
             return new ResponseEntity<>(products, HttpStatus.OK);
         }
     }
+    @DeleteMapping("/{productid}")
+    public ResponseEntity<?> deleteProduct(@PathVariable(value = "productid") String productid){
+        try {
+            productService.deleteProduct(productid);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_FOUND);
+        }
+    }
     @GetMapping("/{productId}")
     public ResponseEntity<?> getByProductId(@PathVariable String productId){
         try {
@@ -36,6 +45,10 @@ public class ProductController {
         }
 
 
+    }
+    @PostMapping("/update")
+    public ResponseEntity<Product> updateProduct(@RequestBody Product product){
+        return new ResponseEntity<>(productService.UpdateProduct(product),HttpStatus.OK);
     }
     //UPDATE METHOD
     @PostMapping()

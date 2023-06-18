@@ -11,6 +11,7 @@ public class Review {
     private Long id;
     private Long customerId;
     private int rating;
+    private String title;
     private String comment;
     private  String productId;
 

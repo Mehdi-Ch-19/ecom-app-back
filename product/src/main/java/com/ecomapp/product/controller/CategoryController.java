@@ -51,9 +51,22 @@ public class CategoryController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }else return new ResponseEntity<>(productList,HttpStatus.OK);
     }
-    @PutMapping()
-    public ResponseEntity<?> updateName(CategoryDto categoryDto){
+    @PostMapping("/update")
+    public ResponseEntity<?> updateName(@RequestBody  CategoryDto categoryDto){
+        Category category1 = categoryService.findByCategoryTitle(categoryDto.getCategoryTitle());
+        if (category1 != null){
+            throw new CategoryNameAleardyExists("category name exists ");
+        }
         Category update = categoryService.update(categoryDto);
         return new ResponseEntity(update,HttpStatus.OK);
+    }
+    @DeleteMapping("/{categoryid}")
+    public ResponseEntity<?> deleteProduct(@PathVariable(value = "categoryid") Long categoryid){
+        try {
+            categoryService.deleteById(categoryid);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_FOUND);
+        }
     }
 }

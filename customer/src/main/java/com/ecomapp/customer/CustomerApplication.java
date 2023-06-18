@@ -30,6 +30,8 @@ public class CustomerApplication {
             roleRepo.saveAndFlush(Role.builder().rolename("ROLE_ADMIN").build());
             customerInter.addCustomer(new CustomerSignUpDto("mehdi","elmahdi.chiheb@uit.ac.ma","pass123",false));
             customerInter.addCustomer(new CustomerSignUpDto("mehdi2","elmahdichiheb@gmail.com","pass123",false));
+            customerInter.addCustomer(new CustomerSignUpDto("test","lika84@gmail.com","pass123",true));
+            customerInter.addCustomer(new CustomerSignUpDto("test","hiporca2000@gmail.com","pass123",true));
 
         };
     }

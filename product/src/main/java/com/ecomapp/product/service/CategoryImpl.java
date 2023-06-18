@@ -33,8 +33,15 @@ public class CategoryImpl implements CategoryService{
     }
 
     @Override
-    public void deleteById(Long id) {
-        categoryRepo.deleteById(id);
+    public boolean deleteById(Long id) {
+        try {
+            categoryRepo.deleteById(id);
+            return true;
+        }catch (Exception e){
+            throw new RuntimeException("product not found");
+
+        }
+
     }
 
     @Override

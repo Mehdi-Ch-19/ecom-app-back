@@ -25,6 +25,8 @@ import com.fasterxml.jackson.databind.json.JsonMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -35,6 +37,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @AllArgsConstructor
@@ -84,7 +88,7 @@ public class OrderImpl implements OrderService{
             productItem.setOrder(order);
             addProductToOrder(order,productItem);
         });
-        orderRepo.saveAndFlush(order);
+         orderRepo.saveAndFlush(order);
         shippingRepo.save(shippingAdresse);
         //Publish to the notification service
         OrderPlaced orderPlaced = OrderPlaced.builder()
@@ -107,10 +111,11 @@ public class OrderImpl implements OrderService{
                 .orderPlaced(orderPlaced).message("Your order was Succes")
                 .customerName(customer.getName()).customerId(customer.getId())
                 .sender("Admin").build();
+
         producer.publish(notificationRequest,
                 "internal.exchange",
                 "internal.notification.routing-key");
-        return order.getOrderId();
+        return orderPlaced.getOrderId();
     }
 
     @Override
@@ -134,6 +139,19 @@ public class OrderImpl implements OrderService{
         }
         );
         return orders;
+    }
+
+    @Override
+    public List<Order> findAll() {
+
+        return orderRepo.findAll().stream().peek(o ->
+                o.setCustomer(customerRest.findCustomerById(o.getCustomerId(), JwtToken.token))).collect(Collectors.toList()
+        );
+    }
+
+    @Override
+    public Page<Order> getAll(Pageable pageable) {
+        return orderRepo.findAll(pageable);
     }
 
     @Override

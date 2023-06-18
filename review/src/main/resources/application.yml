@@ -3,8 +3,8 @@ spring:
     name: review-service
   datasource:
     url: jdbc:postgresql://localhost:5433/review
-    username: 'mehdi'
-    password: 'password'
+    username: 'test'
+    password: 'test'
   jpa:
     properties:
       hibernate:

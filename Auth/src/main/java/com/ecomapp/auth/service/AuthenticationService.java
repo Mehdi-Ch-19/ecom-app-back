@@ -36,7 +36,7 @@ public class AuthenticationService {
         this.customerRest = customerRest;
     }
 
-    public AuthenticationResponse register(CustomerSignUp request) {
+    public CustomerRegistrationResponce register(CustomerSignUp request) {
         // register user in the user-service
         CustomerDto customerDto = new CustomerDto();
         customerDto.setName(request.getName());
@@ -45,7 +45,7 @@ public class AuthenticationService {
         customerDto.setAdmin(request.isAdmin());
         CustomerDto registercustomer = customerRest.register(customerDto);
         CustomerDto newuser = customerRest.findByEmail(registercustomer.getEmail());
-        System.out.println(registercustomer.toString());
+      /*  System.out.println(registercustomer.toString());
         System.out.println(newuser.toString());
         Collection<GrantedAuthority> authorities = new ArrayList<>();
         newuser.getRoles().forEach(r -> {
@@ -57,13 +57,18 @@ public class AuthenticationService {
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
         return AuthenticationResponse.builder()
+                .id(newuser.getId())
+                .roles(user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
+                .email(newuser.getEmail())
                 .accessToken(jwtToken)
                 .refreshToken(refreshToken)
-                .build();
+                .build();*/
+        return CustomerRegistrationResponce.builder().id(registercustomer.getId())
+                .name(registercustomer.getName())
+                .email(request.getEmail()).isAdmin(registercustomer.isAdmin()).build();
     }
 
     public AuthenticationResponse authenticate(CustomerRequest request) {
-        log.info(request.getEmail());
         try {
             log.info(request.getPassword());
             Authentication authentication = new UsernamePasswordAuthenticationToken(request.getEmail(),request.getPassword());
@@ -85,6 +90,7 @@ public class AuthenticationService {
             return AuthenticationResponse.builder()
                     .accessToken(jwtToken)
                     .refreshToken(refreshToken)
+                    .id(registercustomer.getId())
                     .email(user.getUsername())
                     .roles(user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                     .build();
@@ -98,6 +104,7 @@ public class AuthenticationService {
             HttpServletRequest request,
             HttpServletResponse response) throws IOException {
         try {
+            System.out.println("refreshing ...");
             final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
             final String refreshToken;
             final String userEmail;

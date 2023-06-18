@@ -11,6 +11,7 @@ import java.util.UUID;
 
 public interface CustomerInter {
     List<CustomerDto> allCustomer();
+    List<CustomerDto> allAdmins();
     CustomerDto getCustomerById(Long id);
     CustomerDto addCustomer(CustomerSignUpDto customerSignUpDto);
     CustomerDto addAdmin(CustomerSignUpDto customerSignUpDto);
@@ -18,6 +19,7 @@ public interface CustomerInter {
     Customer findByEmail(String email);
     Customer findByEmalAndPassord(String email , String password);
     void deleteCustomer(Long id);
+    CustomerDto updateCustomer(CustomerDto customerDto);
     boolean checkifauthenticationrequired(String path , HttpMethod httpMethod);
 
 }

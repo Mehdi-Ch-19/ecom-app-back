@@ -8,6 +8,7 @@ import com.ecomapp.product.repository.ProductRepo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.lang.reflect.Executable;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -41,6 +42,18 @@ public class ProductServiceImpl implements ProductServiceInterf{
         return productRepo.findById(product_id).orElse(null );
     }
 
+    @Override
+    public Product UpdateProduct(Product product) {
+        Product product1 = getById(product.getId());
+        product1.setProductTitle(product.getProductTitle());
+        product1.setCategory(product.getCategory());
+        product1.setCountInStock(product.getCountInStock());
+        product1.setDescription(product.getDescription());
+        product1.setImageUrl(product.getImageUrl());
+        product.setPrice(product.getPrice());
+        return productRepo.save(product1);
+    }
+
     @Transactional
     @Override
     public void UpdateRating(String product_id, int rating) {
@@ -58,8 +71,13 @@ public class ProductServiceImpl implements ProductServiceInterf{
     }
 
     @Override
-    public void deleteProduct(String id) {
-        productRepo.deleteById(id);
+    public boolean deleteProduct(String id) {
+        try {
+            productRepo.deleteById(id);
+            return true;
+        }catch (Exception e){
+            throw new RuntimeException("product not found");
+        }
     }
 
     @Override
